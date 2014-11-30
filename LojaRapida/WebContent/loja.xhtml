@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	lang="pt-br">
+
+<h:head>
+<script type="text/javascript">
+    function handleDrop(event, ui) {
+        var carrinho = ui.draggable;
+ 
+        carrinho.fadeOut('fast');
+    }
+</script>
+<title>Loja Rápida do Anderson</title>
+</h:head>
+<h:body>
+<p:growl></p:growl>
+<h:form id="produtoForm">
+	
+	<p:fieldset id="carrinho" legend="Carrinho de compras" style="margin-top:20px">
+        <p:outputPanel id="dropArea">
+            <h:outputText value="Arraste o produto até aqui para incluir em sua compra" rendered="#{empty carrinhoMBean.produtos}" 
+            				style="font-size:24px;" />
+            <p:dataTable 
+            		id="carrinhoTable" 
+            		var="produtos" 
+            		value="#{carrinhoMBean.produtos}" 
+            		rendered="#{not empty carrinhoMBean.produtos}">
+            		
+                <p:column headerText="Produto">
+                    <h:outputText value="#{produtos.denominacao}" />
+                </p:column>
+ 
+                <p:column headerText="Preço" style="text-align: right">
+                    <h:outputText value="#{produtos.preco}" >
+                    	<f:convertNumber type="currency"/>
+                    </h:outputText>
+                </p:column>
+
+				<p:column headerText="Quantidade">
+                    <h:outputText value="#{produtos.quantidade}" />
+                </p:column>
+                                
+               	<f:facet name="footer">
+               		<h:outputLabel value="Total de compras: " />
+               		<h:outputText value="#{carrinhoMBean.somarCarrinho()}">
+               		   <f:convertNumber type="currency"/>
+               		</h:outputText>
+               	
+               	<p:commandButton
+				id="withIconFecharCompra"
+				action="#{carrinhoMBean.fecharCompra}"
+				value="Fechar Compra"
+				icon="ui-icon-cart"
+				update="@form"
+				ajax="false"
+				></p:commandButton>
+               	
+               	<p:commandButton
+				id="withIconCancelarCompra"
+				action="#{carrinhoMBean.limparCarrinho}"
+				value="Limpar carrinho"
+				icon="ui-icon-cancel"
+				update="@form"
+				ajax="false"
+				></p:commandButton>
+					
+               	</f:facet>
+                
+            </p:dataTable>
+			
+        </p:outputPanel>
+        
+    </p:fieldset>
+    <p:droppable for="carrinho" 
+    			 tolerance="touch" 
+    			 activeStyleClass="ui-state-highlight" 
+    			 datasource="gridProdutos" 
+    			 onDrop="handleDrop">
+        <p:ajax listener="#{carrinhoMBean.onProdutoDrop}" update="dropArea @form" />
+    </p:droppable>
+    
+    <p:fieldset id="produtosDisponiveis" legend="Produtos disponíveis">
+        <p:dataGrid id="gridProdutos" var="produto" value="#{produtoMBean.listaCompleta}" columns="3">
+            <p:column>
+                <p:panel id="pnl" header="#{produto.denominacao}" 
+                    style="text-align:center"
+                    >
+                    <h:outputText value="#{produto.preco}">
+                    	<f:convertNumber type="currency"/>
+                    </h:outputText>
+                    <h:panelGrid columns="1" style="width:100%">
+                        <p:graphicImage library="produtos" name="#{produto.img}" width="50"/>
+                    </h:panelGrid>
+                </p:panel>
+                 <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+            </p:column>
+        </p:dataGrid>
+    </p:fieldset>
+ </h:form>
+ 
+</h:body>
+</html>

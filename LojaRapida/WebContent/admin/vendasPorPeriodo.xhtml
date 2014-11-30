@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="titulo">Relatório de vendas por período.
+
+</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="vendaForm">
+
+			<p:fieldset id="venda"
+				legend="Informe o período para obter a lista de vendas"
+				style="margin-top:20px">
+				<p:panelGrid columns="2">
+
+					<p:outputLabel for="datainicio" value="Data início:" />
+					<p:calendar id="datainicio" pattern="dd-MM-yyyy HH:mm:ss" mask="true"
+						value="#{vendaMBean.dataInicio}" />
+
+					<p:outputLabel for="datafim" value="Data fim:" />
+					<p:calendar id="datafim" pattern="dd-MM-yyyy HH:mm:ss" mask="true"
+						value="#{vendaMBean.dataFim}" />
+
+					<f:facet name="footer">
+						<p:commandButton id="withIconTopProduto"
+							action="#{vendaMBean.getVendaPorPeriodo()}" value="Gerar relatório"
+							icon="ui-icon-search" update="@form" ajax="false"></p:commandButton>
+					</f:facet>
+
+				</p:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset id="relatorio"
+				legend="Relatório de vendas por período"
+				style="margin-top:20px"
+				rendered="#{not empty vendaMBean.vendas}">
+				<p:dataTable id="vendaTable" var="venda"
+					value="#{vendaMBean.vendas}"
+					>
+
+					<p:column headerText="Data">
+						<h:outputText value="#{venda.dataVenda}"/>
+					</p:column>
+
+					<p:column headerText="Cliente">
+						<h:outputText value="#{venda.cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Descrição do produto">
+						<h:outputText value="#{venda.produto.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Quantidade">
+						<h:outputText value="#{venda.quantidade}" />
+					</p:column>
+				</p:dataTable>
+
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

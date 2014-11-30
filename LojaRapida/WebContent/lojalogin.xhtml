@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" lang="pt-br">
+
+<h:head>
+	<title>Loja Rápida do Anderson - Login</title>
+</h:head>
+
+<h:body>
+	<p:growl></p:growl>
+	<h:form id="loginForm">
+
+		<p:fieldset legend="Entrada no sistema" style="margin-top:20px">
+
+				<p:panelGrid id="loginGrid" columns="2">
+
+					<h:outputLabel value="Email" />
+					<p:inputText id="email" value="#{loginMBean.obj.email}"
+						required="true" requiredMessage="Por favor informe o seu email."
+						validatorMessage="Email em um formato inválido.">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+					</p:inputText>
+					<p:watermark for="email" value="Digite o seu endereço de email"></p:watermark>
+					<p:message for="email"></p:message>
+
+					<h:outputText value="Senha: " />
+					<p:password id="senha" value="#{loginMBean.obj.senha}"
+						feedback="true" required="true"
+						requiredMessage="Campo senha é obrigatório.">
+					</p:password>
+						<p:watermark for="senha" value="Digite sua senha"></p:watermark>
+						<p:message for="senha"></p:message>
+
+					<f:facet name="footer">
+
+						<p:commandButton id="withIconEntrar"
+						    action="#{loginMBean.logon(carrinhoMBean.produtos)}"
+							value="Entrar"
+							icon="ui-icon-locked" update="@form" ajax="false"></p:commandButton>
+
+					</f:facet>
+
+				</p:panelGrid>
+
+		</p:fieldset>
+		
+	</h:form>
+
+</h:body>
+
+</html>

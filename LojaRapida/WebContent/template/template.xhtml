@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Loja Rápida - <ui:insert name="titulo">Substituir o Título Aqui</ui:insert></title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:growl></p:growl>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+	        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+	        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    </p:confirmDialog>
+
+<!-- 		<p:layoutUnit position="north" size="100" header="Loja rápida"
+			resizable="true" closable="true" collapsible="true">
+			
+				<h:form>
+					Módulo Administrativo -  
+						<h:commandLink value="Início" action="principal" /> - 
+						<ui:insert name="titulo">Substituir o Título Aqui</ui:insert>
+				</h:form>
+		</p:layoutUnit>
+ -->
+		<p:layoutUnit position="center">
+			<p:menubar>
+		        <p:submenu label="Cadastros" icon="ui-icon-document">
+		            <p:menuitem value="Categorias" url="categoria.xhtml?faces-redirect=true" />
+		            <p:separator />
+		            <p:menuitem value="Produtos" url="produto.xhtml?faces-redirect=true" />
+		            <p:separator />
+		            <p:menuitem value="Clientes" url="cliente.xhtml?faces-redirect=true" />
+		        </p:submenu>
+		 
+		        <p:submenu label="Relatórios" icon="ui-icon-pencil">
+		            <p:menuitem value="Top 10 - Produtos" url="topProdutos.xhtml?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-w" />
+		            <p:menuitem value="Vendas por período" url="vendasPorPeriodo.xhtml?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-e" />
+		        </p:submenu>
+		 		
+		 		<p:submenu label="Loja" icon="ui-icon-pencil">
+		 		    <p:menuitem value="Ir para loja" url="../loja.xhtml?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-w" />
+		        </p:submenu>        	 
+		        
+		    </p:menubar>
+    
+			<ui:insert name="conteudo">		
+			Conteúdo...
+			</ui:insert>
+		</p:layoutUnit>
+
+     <p:layoutUnit position="south" header="UNIRN - Todos os Direitos Reservados" size="100" resizable="true" closable="true" collapsible="true">
+    </p:layoutUnit>
+
+	</p:layout>
+
+</h:body>
+
+</html>

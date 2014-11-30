@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/template/template.xhtml">
+
+
+	<ui:define name="titulo">
+		
+	</ui:define>
+	
+	<ui:define name="conteudo">
+	
+		<h3>Bem Vindo ao módulo administrativo da Loja Rápida</h3>
+		
+		<p>
+		A loja rápida foi desenvolvida durante o curso de pós graduação em sistemas corporativos da UNIRN.
+		<br />
+		Para iniciar a administrar sua loja, por favor selecione um dos links abaixo.
+		</p>
+		
+		
+		<h:form>
+		<ul>
+			<li>
+				<h:commandLink action="categoria?faces-redirect=true" value="Administar Categorias de Produtos" /> 
+				<p>Efetui todas as operações com categorias como adicionar uma nova categoria, alterar ou exculir uma categoria existente. </p>
+			</li>
+						
+			<li>
+				<h:commandLink action="produto?faces-redirect=true" value="Administar Catálogo de Produtos" />
+				<p>Administre o seu catalogo de produtos, informando preços, enviando imagens além de cadstro e alteração.</p>	 
+			</li>
+			
+			<li>
+				<h:commandLink action="cliente?faces-redirect=true" value="Administar Carteira de Clientes" />
+				<p>Acesse os cadastros dos seus clientes e saiba quem compra na sua loja.</p> 
+			</li>
+			
+			<li>
+				<h:commandLink action="vendasPorPeriodo?faces-redirect=true" value="Consultar relatório de Vendas" />
+				<p>Acompanhe as vendas da sua loja e o seu faturamento</p> 
+			</li>
+		</ul>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>

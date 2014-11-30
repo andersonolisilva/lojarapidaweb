@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+
+	<ui:define name="titulo">Categorias</ui:define>
+
+	<ui:define name="conteudo">
+		<p:tabView binding="#{categoriaMBean.tabCrud}">			
+			<p:tab title="Listagem">
+				<h:form>
+					<p:dataTable id="tableCategoria" value="#{categoriaMBean.listaCompleta}" var="categoria"
+						style="margin-right:15px" rows="10" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15">
+						<f:facet name="caption">Lista de categorias</f:facet>
+
+
+						<p:column headerText="Denominação"
+							sortBy="#{categoria.denominacao}">
+							<h:outputText value="#{categoria.denominacao}" />
+						</p:column>
+
+						<p:column headerText="Descrição" sortBy="#{categoria.descricao}">
+							<h:outputText value="#{categoria.descricao}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton
+							id="withIconSelecionar"
+							action="#{categoriaMBean.selecionar(categoria)}"
+							icon="ui-icon-search"
+							update="@form"
+							ajax="false"
+						></p:commandButton>
+						
+						<p:growl id="message"/>
+						 
+					    <p:commandButton icon="ui-icon-trash" actionListener="#{categoriaMBean.deletar(categoria)}" update="message tableCategoria">
+					        <p:confirm header="Confirmação" message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					    </p:commandButton>
+
+						</p:column>							
+					</p:dataTable>
+				</h:form>
+			</p:tab>
+
+			<p:tab title="Cadastro">
+				<h:form>
+					<h:inputHidden value="#{categoriaMBean.obj.id}" />
+					<h:panelGrid>
+						<h:outputLabel value="Denominação" />
+						<p:inputText id="denominacao"
+							value="#{categoriaMBean.obj.denominacao}" required="true"
+							requiredMessage="Campo denominação é obrigatório"
+							validatorMessage="Campo denominacao não pode ultrapassar 30 caracteres">
+							<f:validateLength minimum="1" maximum="30"></f:validateLength>
+
+						</p:inputText>
+						<h:message for="denominacao" />
+
+						<h:outputLabel value="Descrição" />
+
+						<p:inputTextarea value="#{categoriaMBean.obj.descricao}"
+							rows="5" cols="30" counter="display" maxlength="250"
+							counterTemplate="Restam {0} characteres." autoResize="false" />
+						<h:outputText id="display" />
+
+						<f:facet name="footer">
+							<p:commandButton
+								value="Salvar"
+								id="withIconSalvar"
+								action="#{categoriaMBean.salvar}"
+								icon="ui-icon-disk"
+								ajax="false"
+							></p:commandButton>
+	
+						</f:facet>						
+					</h:panelGrid>
+
+				</h:form>
+			</p:tab>
+						
+		</p:tabView>
+	</ui:define>
+
+</ui:composition>

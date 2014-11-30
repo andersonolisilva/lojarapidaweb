@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/template/template.xhtml">
+
+	<ui:define name="titulo">Produtos</ui:define>
+
+	<ui:define name="conteudo">
+		<p:tabView binding="#{produtoMBean.tabCrud}">			
+			<p:tab title="Listagem" disabled="">
+				<h:form>
+					<p:dataTable id="tableProduto" value="#{produtoMBean.listaCompleta}" var="produto"
+						style="margin-right:15px" rows="10" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15"
+						>
+						<f:facet name="caption">Lista de Produtos</f:facet>
+
+						<p:column headerText="Denominação"
+							sortBy="#{produto.denominacao}">
+							<h:outputText value="#{produto.denominacao}" />
+						</p:column>
+
+						<p:column headerText="Descrição" sortBy="#{produto.descricao}">
+							<h:outputText value="#{produto.descricao}" />
+						</p:column>
+
+						<p:column headerText="Preço" sortBy="#{produto.preco}" style="text-align:right">
+							<h:outputText value="#{produto.preco}" >
+							   <f:convertNumber type="currency"></f:convertNumber>
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Categoria" sortBy="#{produto.categoria.denominacao}">
+							<h:outputText value="#{produto.categoria.denominacao}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton
+							id="withIconSelecionar"
+							action="#{produtoMBean.selecionar(produto)}"
+							icon="ui-icon-search"
+							update="@form"
+							ajax="false"
+						></p:commandButton>
+						
+						<p:growl id="message"/>
+						 
+					    <p:commandButton icon="ui-icon-trash" actionListener="#{produtoMBean.deletar(produto)}" update="message tableProduto">
+					        <p:confirm header="Confirmação" message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					    </p:commandButton>
+					 
+					 	</p:column>							
+					</p:dataTable>
+				</h:form>
+			</p:tab>
+
+			<p:tab title="Cadastro">
+				<h:form>
+					<h:inputHidden value="#{produtoMBean.obj.id}" />
+					<h:panelGrid>
+						<h:outputLabel value="Denominação" />
+						<p:inputText id="denominacao"
+							value="#{produtoMBean.obj.denominacao}" required="true"
+							requiredMessage="Campo denominação é obrigatório"
+							validatorMessage="Campo denominacao não pode ultrapassar 30 caracteres">
+							<f:validateLength minimum="1" maximum="30"></f:validateLength>
+
+						</p:inputText>
+						<h:message for="denominacao" />
+
+						<h:outputLabel value="Descrição" />
+
+						<p:inputTextarea value="#{produtoMBean.obj.descricao}"
+							rows="5" cols="30" counter="display" maxlength="250"
+							counterTemplate="Restam {0} characteres." autoResize="false" />
+						<h:outputText id="display" />
+
+						<h:outputLabel value="Preço" styleClass="colunaDireita"/>
+						<p:inputText id="preco" styleClass="colunaDireita"
+							value="#{produtoMBean.obj.preco}" required="true"
+							requiredMessage="Campo preço é obrigatório">
+							<f:convertNumber type="currency"/>
+						</p:inputText>
+						<h:message for="preco" />
+
+						<h:outputText value="Categoria" />
+						<p:selectOneMenu 
+							required="true" 
+							requiredMessage="Campo categoria obrigatório."
+							id="categoria" value="#{produtoMBean.obj.categoria.id}">
+						            <f:selectItem itemLabel="--SELECIONE UMA CATEGORIA--"/>
+						            <f:selectItems value="#{categoriaMBean.listaCompleta}"
+						                    var="categoria"
+						                    itemLabel="#{categoria.denominacao}"
+						                    itemValue="#{categoria.id}"/>
+						</p:selectOneMenu>
+						        
+						<f:facet name="footer">
+							<p:commandButton
+								value="Salvar"
+								id="withIconSalvar"
+								action="#{produtoMBean.salvar}"
+								icon="ui-icon-disk"
+								ajax="false"
+							></p:commandButton>
+	
+						</f:facet>						
+					</h:panelGrid>
+
+				</h:form>
+			</p:tab>
+			
+			<p:tab title="Imagem do produto" disabled="#{produtoMBean.obj.id == 0}">
+				<h:form>
+					<p:panel id="imagemProduto" header="Imagem atual" style="text-align:center">
+						<p:graphicImage value="/resources/produtos/#{produtoMBean.obj.img}"></p:graphicImage>
+					</p:panel>
+					<p:fileUpload fileUploadListener="#{produtoMBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+	                          update="messages, @form" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+	                          label="Selecionar" cancelLabel="Cancelar" uploadLabel="Carregar" />
+	    			<p:growl id="messages"/>
+    			</h:form>
+			</p:tab>
+						
+		</p:tabView>
+	</ui:define>
+
+</ui:composition>

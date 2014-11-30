@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+
+<ui:define name="titulo">Top 10 de Produtos mais vendidos
+
+</ui:define>
+
+<ui:define name="conteudo">
+
+	<h:form id="produtoForm">
+
+		<p:fieldset id="cliente"
+			legend="Informe o período para obter o TOP 10 dos produtos mais vendidos"
+			style="margin-top:20px">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel for="datainicio" value="Data início:" />
+				<p:calendar id="datainicio" pattern="dd-MM-yyyy HH:mm:ss" mask="true"
+					value="#{produtoMBean.dataInicio}" />
+
+				<p:outputLabel for="datafim" value="Data fim:" />
+				<p:calendar id="datafim" pattern="dd-MM-yyyy HH:mm:ss" mask="true"
+					value="#{produtoMBean.dataFim}" />
+
+				<f:facet name="footer">
+					<p:commandButton id="withIconTopProduto"
+						action="#{produtoMBean.getTopProdutos}" value="Gerar relatório"
+						icon="ui-icon-search" update="@form" ajax="false"></p:commandButton>
+				</f:facet>
+
+			</p:panelGrid>
+
+		</p:fieldset>
+
+		<p:fieldset id="relatorio"
+			legend="Relação dos 10 produtos mais vendidos"
+			style="margin-top:20px"
+			rendered="#{not empty produtoMBean.produtoTopDez}">
+			<p:dataTable id="produtoTable" var="produtos"
+				value="#{produtoMBean.produtoTopDez}">
+
+				<p:column headerText="Produto">
+					<h:outputText value="#{produtos.denominacao}" />
+				</p:column>
+
+				<p:column headerText="Descrição">
+					<h:outputText value="#{produtos.descricao}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</p:fieldset>
+	</h:form>
+</ui:define>
+
+</ui:composition>

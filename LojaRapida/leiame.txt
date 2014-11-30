@@ -1,0 +1,37 @@
+Aluno do trabalho: Anderson Oliveira da Silva
+
+1. Recursos adicionais ao trabalho:
+1.1. Validação de CPF.
+1.2. Botão limpar carrinho para recomeçar a lista de compra.
+
+2. Requisitos oficiais para o trabalho
+Instruções Iniciais:
+- O Trabalho poderá ser Feito em Grupo de Até 3 Pessoas.
+
+- O nome dos componentes do grupo deverão constar em um arquivo leiame.txt que deverá ser postado junto com o projeto.
+
+Instruções do Trabalho
+
+2.1- Baixe o projeto para sua maquina e importe no seu eclipse.
+2.2- Implementar o CRUD completo de Cliente:
+	a. Adicionar validação de email no campo email. (1,0)
+	b. Usar o componente inputSecret do prime para o campo senha. (0,5)
+
+2.3- No frot-end da loja:
+	a. Caso o carrinho de compras contenha produtos, adicionar um botão “FECHAR COMPRA” (0,5)
+	b. Ao clicar em “FECHAR COMPRA” O sistema deverá redirecionar para uma página onde será pedido o email e a senha do cliente. (0,5)
+	c. Ao informar o email e senha o sistema deverá consultar no banco, caso o mesmo não encontre um registro de usuário com os dados informados, exibirá mensagem “Usuário não identificado” e permanecerá na mesma tela. (0,5)
+	d. Caso o sistema encontre o cliente, irá redirecionar para uma tela exibindo os dados do cliente e o carrinho de compras completo com o total da compra e um botão “CONFIRMAR COMPRA.” (1,0)
+	e. Ao confirmar a compra o sistema deverá gravar, para cada produto adicionado no carrinho um registro na entidade Venda. (Venda{ int id; Date dataVenda; Produto produto; int quantidade; Cliente; cliente; } ) (1,0)
+	f. Após a confirmação da venda, o sistema redireciona para o front-end da loja e exibe a mensagem de VENDA EFETUADA COM SUCESSO. (0,5)
+	
+2.4- No Admin da Loja, implementar o relatório de produtos mais vendidos: (2,5 para o item 4 completo)
+	a. Em ProdutoDAO, crie o método listTopProdutos(Data inicio, Data fim) que retorne a lista de 10 produtos mais vendidos no período informado;
+	b. Em ProdutoMBean, crie método getTopProdutos para executar o DAO e retornar a lista para a VIEW;
+	c. Crie a página topProdutos.xhtml com um formulário com os campos data inicio e data fim (use o componente de calendário do primefaces) e o botão “GERAR RELATÓRIO”
+	d. Ao clicar em GERAR Relatorio deve ser exibido uma DataTAble com os 10 produtos mais vendidos.
+
+2.5- Seguindo a mesma metodologia do item 4, crie o relatório de vendas por período. (2,0)
+
+Boa Sorte!
+Dinarte

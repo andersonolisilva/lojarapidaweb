@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+
+	<ui:define name="titulo">Clientes</ui:define>
+
+	<ui:define name="conteudo">
+		<p:tabView binding="#{clienteMBean.tabCrud}">			
+			<p:tab title="Listagem" disabled="">
+				<h:form>
+					<p:dataTable id="tableCliente" value="#{clienteMBean.listaCompleta}" var="cliente"
+						style="margin-right:15px" rows="10" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15">
+						<f:facet name="caption">Lista de clientes</f:facet>
+
+						<p:column headerText="Nome"
+							sortBy="#{cliente.nome}">
+							<h:outputText value="#{cliente.nome}" />
+						</p:column>
+
+						<p:column headerText="CPF" sortBy="#{cliente.cpf}">
+							<h:outputText value="#{cliente.cpf}">
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="E-mail" sortBy="#{cliente.email}">
+							<h:outputText value="#{cliente.email}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton
+							id="withIconSelecionar"
+							action="#{clienteMBean.selecionar(cliente)}"
+							icon="ui-icon-search"
+							update="@form"
+							ajax="false"
+							></p:commandButton>
+
+						<p:growl id="message" />
+						 
+					    <p:commandButton icon="ui-icon-trash" actionListener="#{clienteMBean.deletar(cliente)}" update="message tableCliente">
+					        <p:confirm header="Confirmação" message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					    </p:commandButton>
+					 
+						</p:column>							
+					</p:dataTable>
+				</h:form>
+			</p:tab>
+
+			<p:tab title="Cadastro">
+				<h:form>
+					<h:inputHidden id="id" value="#{clienteMBean.obj.id}" />
+					<h:panelGrid>
+						<h:outputLabel value="Nome" />
+						<p:inputText id="nome"
+							value="#{clienteMBean.obj.nome}" required="true"
+							requiredMessage="Campo nome é obrigatório"
+							validatorMessage="Campo nome não pode ter menos de 5 caracteres">
+							<f:validateLength minimum="5"></f:validateLength>
+						</p:inputText>
+						<p:watermark for="nome" value="Digite o seu nome"></p:watermark>
+						<h:message for="nome" />
+
+						<h:outputLabel value="CPF" />
+						<p:inputText id="cpf"
+							value="#{clienteMBean.obj.cpf}" required="true"
+							requiredMessage="Campo CPF é o obrigatório"
+							validatorMessage="CPF inválido.">
+						<f:validator validatorId="cpf"/>
+						</p:inputText>
+						<p:watermark for="cpf" value="Digite o CPF (Apenas números)"></p:watermark>
+						<p:message for="cpf"></p:message>
+
+						<h:outputLabel value="Email" />
+						<p:inputText id="email"
+							value="#{clienteMBean.obj.email}"
+							required="true"
+							requiredMessage="Por favor informe o seu email."
+							validatorMessage="Email em um formato inválido."
+							>
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+							</p:inputText>
+							<p:watermark for="email" value="Digite o seu endereço de email"></p:watermark>
+							<p:message for="email"></p:message>
+
+						<h:outputText value="Senha: " />
+        				<p:password id="senha" value="#{clienteMBean.obj.senha}" feedback="true" 
+        				required="true"
+        				requiredMessage="Campo senha é obrigatório.">
+        				<p:watermark for="senha" value="Digite sua senha"></p:watermark>
+        				 <p:message for="senha"></p:message>
+        				</p:password>
+        				
+						<f:facet name="footer">
+							<p:commandButton
+								value="Salvar"
+								id="withIconSalvar"
+								action="#{clienteMBean.salvar}"
+								icon="ui-icon-disk"
+								ajax="false"
+							></p:commandButton>
+	
+						</f:facet>						
+					</h:panelGrid>
+
+				</h:form>
+			</p:tab>
+						
+		</p:tabView>
+	</ui:define>
+
+</ui:composition>

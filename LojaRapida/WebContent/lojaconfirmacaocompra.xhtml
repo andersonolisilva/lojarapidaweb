@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	lang="pt-br">
+
+<h:head>
+<title>Loja Rápida do Anderson - Confirmação da Compra</title>
+</h:head>
+<h:body>
+<h:form id="produtoForm">
+
+	<p:fieldset id="cliente" legend="Informação do cliente" style="margin-top:20px">
+	  <p:panelGrid columns="2">
+		<p:outputLabel value="Nome"/>
+		<p:outputLabel value="#{loginMBean.obj.nome}"/>
+		
+		<p:outputLabel value="Email"/>
+		<p:outputLabel value="#{loginMBean.obj.email}"/>
+		
+		<p:outputLabel value="CPF"/>
+		<p:outputLabel value="#{loginMBean.obj.cpf}"/>
+	
+	</p:panelGrid>
+	
+	</p:fieldset>	
+	<p:fieldset id="carrinho" legend="Carrinho de compras" style="margin-top:20px">
+            <p:dataTable 
+            		id="carrinhoTable" 
+            		var="produtos" 
+            		value="#{carrinhoMBean.produtos}" 
+            		rendered="#{not empty carrinhoMBean.produtos}">
+            		
+                <p:column headerText="Produto">
+                    <h:outputText value="#{produtos.denominacao}" />
+                </p:column>
+ 
+                <p:column headerText="Preço" style="text-align: right">
+                    <h:outputText value="#{produtos.preco}">
+                    	<f:convertNumber type="currency"/>
+                    </h:outputText>
+                </p:column>
+
+				<p:column headerText="Quantidade">
+                    <h:outputText value="#{produtos.quantidade}" />
+                </p:column>
+                                
+               	<f:facet name="footer">
+               	    <h:outputLabel value="Total de compras: " />
+               		<h:outputText value="#{carrinhoMBean.somarCarrinho()}">
+               			<f:convertNumber type="currency"/>
+               		</h:outputText>
+               	
+               	<p:commandButton
+				id="withIconFecharCompra"
+				action="#{carrinhoMBean.confirmarCompra(loginMBean.obj)}"
+				value="Confirmar Compra"
+				icon="ui-icon-cart"
+				update="@form"
+				ajax="false"
+				></p:commandButton>
+					
+               	</f:facet>
+                
+            </p:dataTable>
+                    
+    </p:fieldset>
+ </h:form>
+ 
+</h:body>
+</html>
