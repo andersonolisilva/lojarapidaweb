@@ -42,6 +42,10 @@
 							<h:outputText value="#{produto.categoria.denominacao}" />
 						</p:column>
 
+						<p:column headerText="Qtde em Estoque" sortBy="#{produto.qtdeEstoque}">
+							<h:outputText value="#{produto.qtdeEstoque}" />
+						</p:column>
+						
 						<p:column>
 							<p:commandButton
 							id="withIconSelecionar"
@@ -102,7 +106,15 @@
 						                    itemLabel="#{categoria.denominacao}"
 						                    itemValue="#{categoria.id}"/>
 						</p:selectOneMenu>
+						
+						<h:outputLabel value="Qtde Estoque" styleClass="colunaDireita"/>
+						<p:inputText id="qtdeEstoque" styleClass="colunaDireita"
+							value="#{produtoMBean.obj.qtdeEstoque}" required="true"
+							requiredMessage="Campo qtde de estoque é obrigatório">
+						</p:inputText>
+						<h:message for="qtdeEstoque" />
 						        
+
 						<f:facet name="footer">
 							<p:commandButton
 								value="Salvar"

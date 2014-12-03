@@ -59,8 +59,20 @@ public class Produto implements PersistDB{
 	@OneToMany(mappedBy="produto")
 	Collection<Venda> vendas;
 	
+	private int qtdeEstoque;
+	
 	//constructors----------
 	
+	public int getQtdeEstoque() {
+		return qtdeEstoque;
+	}
+
+
+	public void setQtdeEstoque(int qtdeEstoque) {
+		this.qtdeEstoque = qtdeEstoque;
+	}
+
+
 	/**
 	 * Construtor padr�o
 	 */
@@ -171,7 +183,4 @@ public class Produto implements PersistDB{
 	public void setVendas(Collection<Venda> vendas) {
 		this.vendas = vendas;
 	} 
-	
-	
-
 }
