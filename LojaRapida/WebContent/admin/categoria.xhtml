@@ -56,7 +56,7 @@
 					<h:inputHidden value="#{categoriaMBean.obj.id}" />
 					<h:panelGrid>
 						<h:outputLabel value="Denominação" />
-						<p:inputText id="denominacao"
+						<p:inputText id="denominacao" name="denominacao"
 							value="#{categoriaMBean.obj.denominacao}" required="true"
 							requiredMessage="Campo denominação é obrigatório"
 							validatorMessage="Campo denominacao não pode ultrapassar 30 caracteres">
@@ -67,7 +67,7 @@
 
 						<h:outputLabel value="Descrição" />
 
-						<p:inputTextarea value="#{categoriaMBean.obj.descricao}"
+						<p:inputTextarea id="descricao" name="descricao" value="#{categoriaMBean.obj.descricao}"
 							rows="5" cols="30" counter="display" maxlength="250"
 							counterTemplate="Restam {0} characteres." autoResize="false" />
 						<h:outputText id="display" />

@@ -83,6 +83,13 @@
 		</dependency>
 		<!-- Fim para upload de arquivos -->
 
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.22.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<!-- PRIMEFACES Repositório -->
