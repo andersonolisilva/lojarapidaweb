@@ -34,7 +34,7 @@
 
 						<p:column headerText="Preço" sortBy="#{produto.preco}" style="text-align:right">
 							<h:outputText value="#{produto.preco}" >
-							   <f:convertNumber type="currency"></f:convertNumber>
+							   <f:convertNumber currencySymbol="R$" pattern="#,##0.00"></f:convertNumber>
 							</h:outputText>
 						</p:column>
 
@@ -91,7 +91,7 @@
 						<p:inputText id="preco" styleClass="colunaDireita"
 							value="#{produtoMBean.obj.preco}" required="true"
 							requiredMessage="Campo preço é obrigatório">
-							<f:convertNumber type="currency"/>
+							<f:convertNumber currencySymbol="R$" pattern="#,##0.00"/>
 						</p:inputText>
 						<h:message for="preco" />
 
@@ -136,7 +136,7 @@
 						<p:graphicImage value="/resources/produtos/#{produtoMBean.obj.img}"></p:graphicImage>
 					</p:panel>
 					<p:fileUpload fileUploadListener="#{produtoMBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-	                          update="messages, @form" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+	                          update="messages, @form" sizeLimit="100000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 	                          label="Selecionar" cancelLabel="Cancelar" uploadLabel="Carregar" />
 	    			<p:growl id="messages"/>
     			</h:form>

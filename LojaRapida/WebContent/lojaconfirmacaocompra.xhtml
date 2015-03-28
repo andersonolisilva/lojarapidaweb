@@ -40,7 +40,7 @@
  
                 <p:column headerText="Preço" style="text-align: right">
                     <h:outputText value="#{produtos.preco}">
-                    	<f:convertNumber type="currency"/>
+                    	<f:convertNumber currencySymbol="R$" pattern="#,##0.00"/>
                     </h:outputText>
                 </p:column>
 
@@ -51,7 +51,7 @@
                	<f:facet name="footer">
                	    <h:outputLabel value="Total de compras: " />
                		<h:outputText value="#{carrinhoMBean.somarCarrinho()}">
-               			<f:convertNumber type="currency"/>
+               			<f:convertNumber currencySymbol="R$" pattern="#,##0.00"/>
                		</h:outputText>
                	
                	<p:commandButton
