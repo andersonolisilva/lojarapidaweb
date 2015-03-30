@@ -18,6 +18,4 @@ public class VendaService {
 		return vendaDAO.vendaPorPeriodo(dataInicio, dataFim);
 	}
 	
-	
-	
 }

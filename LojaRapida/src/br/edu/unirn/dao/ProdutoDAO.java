@@ -6,8 +6,9 @@ import java.util.List;
 import javax.persistence.Query;
 
 import br.edu.unirn.dominio.Produto;
+import br.edu.unirn.test.dao.IDAO;
 
-public class ProdutoDAO extends GenericDAO<Produto>{
+public class ProdutoDAO extends GenericDAO<Produto> implements IDAO<Produto>{
 
 	@Override
 	public Class<Produto> getClassType() {

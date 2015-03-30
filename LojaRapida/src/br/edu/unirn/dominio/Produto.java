@@ -182,5 +182,70 @@ public class Produto implements PersistDB{
 
 	public void setVendas(Collection<Venda> vendas) {
 		this.vendas = vendas;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result
+				+ ((denominacao == null) ? 0 : denominacao.hashCode());
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((img == null) ? 0 : img.hashCode());
+		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
+		result = prime * result + qtdeEstoque;
+		result = prime * result + quantidade;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
+		if (denominacao == null) {
+			if (other.denominacao != null)
+				return false;
+		} else if (!denominacao.equals(other.denominacao))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (id != other.id)
+			return false;
+		if (img == null) {
+			if (other.img != null)
+				return false;
+		} else if (!img.equals(other.img))
+			return false;
+		if (preco == null) {
+			if (other.preco != null)
+				return false;
+		} else if (!preco.equals(other.preco))
+			return false;
+		if (qtdeEstoque != other.qtdeEstoque)
+			return false;
+		if (quantidade != other.quantidade)
+			return false;
+		return true;
 	} 
+	
+	
 }
