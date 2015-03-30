@@ -13,7 +13,6 @@
 <h:body>
 	<p:growl></p:growl>
 	<h:form id="loginForm">
-
 		<p:fieldset legend="Entrada no sistema" style="margin-top:20px">
 
 				<p:panelGrid id="loginGrid" columns="2">
@@ -39,7 +38,7 @@
 					<f:facet name="footer">
 
 						<p:commandButton id="withIconEntrar"
-						    action="#{loginMBean.logon(carrinhoMBean.produtos)}"
+						    action="#{carrinhoMBean.logon(loginMBean.obj)}"
 							value="Entrar"
 							icon="ui-icon-locked" update="@form" ajax="false"></p:commandButton>
 

@@ -1,29 +1,38 @@
 package br.edu.unirn.controle;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.event.DragDropEvent;
 
-import br.edu.unirn.dao.VendaDAO;
 import br.edu.unirn.dominio.Cliente;
 import br.edu.unirn.dominio.Produto;
-import br.edu.unirn.dominio.Venda;
+import br.edu.unirn.service.CarrinhoService;
+import br.edu.unirn.service.LogonService;
 
 @ManagedBean
 @SessionScoped
 public class CarrinhoMBean extends AbstractController{
 
-	@Override
-	void init() {		
-	}
 	
 	List<Produto> produtos;
 	Produto produtoSelecionado;
+	
+	CarrinhoService service;
+	LogonService serviceLogon;
+	
+	Cliente cliente;
+
+	@Override
+	@PostConstruct
+	void init() {	
+		service = new CarrinhoService(produtos);
+		serviceLogon = new LogonService();
+	}
 
 	public Produto getProdutoSelecionado() {
 		return produtoSelecionado;
@@ -32,9 +41,17 @@ public class CarrinhoMBean extends AbstractController{
 	public void setProdutoSelecionado(Produto produtoSelecionado) {
 		this.produtoSelecionado = produtoSelecionado;
 	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	public List<Produto> getProdutos() {
-		return produtos;
+		return this.produtos;
 	}
 
 	public void setProdutos(List<Produto> produtos) {
@@ -58,26 +75,15 @@ public class CarrinhoMBean extends AbstractController{
     }
 	
 	private void somaQuantidade(Produto produto){
-		for (Produto p : produtos) {
-			if (p.getId() == produto.getId()){
-				p.setQuantidade(p.getQuantidade()+1);
-			}
-		}
+		produtos = service.somaQuantidade(produtos, produto);
 	}
 	
 	public double somarCarrinho(){
-		double total = 0.0;
-		for (Produto produto : this.produtos) {
-			total += produto.getPreco()*produto.getQuantidade();			
-		}
-		return total;
+		return service.somarCarrinho(produtos);
 	}
 	
 	public void limparCarrinho(){
-		for (Produto produto : produtos) {
-			produto.setQuantidade(1);
-		}
-		produtos = new ArrayList<Produto>();
+		produtos = service.limparCarrinho(produtos);
 	}
 
 	public String fecharCompra(){
@@ -85,18 +91,20 @@ public class CarrinhoMBean extends AbstractController{
 	}
 	
 	public String confirmarCompra(Cliente cliente){
-		for (Produto produto : produtos) {
-			VendaDAO daoVenda = new VendaDAO();
-			Venda venda = new Venda();
-			venda.setCliente(cliente);
-			venda.setDataVenda(new Date());
-			venda.setProduto(produto);
-			venda.setQuantidade(produto.getQuantidade());
-			
-			daoVenda.create(venda);
-		}
-		produtos = new ArrayList<Produto>();
+		produtos = service.confirmarCompra(produtos, cliente);
 		addInfo("Venda efetuada com sucesso.");
 		return "loja";
+	}
+	
+	public String logon(Cliente clienteLogado){
+		clienteLogado = serviceLogon.logon(clienteLogado);
+		setCliente(clienteLogado);
+		if(clienteLogado==null){
+			addInfo("Usuário ou senha inválidos");
+			return "lojalogin";
+		}else{
+			addInfo("Usuário autenticado no sistema");
+			return "lojaconfirmacaocompra";
+		}
 	}
 }

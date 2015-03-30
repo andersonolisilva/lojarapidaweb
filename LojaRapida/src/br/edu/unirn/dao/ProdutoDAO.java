@@ -27,6 +27,7 @@ public class ProdutoDAO extends GenericDAO<Produto>{
 		consulta.setParameter("dataInicio", dataInicio);
 		consulta.setParameter("dataFim", dataFim);
 		
+		@SuppressWarnings("unchecked")
 		List<Produto> produtos = consulta.setFirstResult(0).setMaxResults(10).getResultList();
 		
 		/**

@@ -15,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 
 import br.edu.unirn.dao.ProdutoDAO;
 import br.edu.unirn.dominio.Produto;
+import br.edu.unirn.service.ProdutoService;
 
 @ManagedBean
 @ViewScoped
@@ -23,13 +24,16 @@ public class ProdutoMBean extends AbstractController{
 	List<Produto> produtoTopDez;
 	private Date dataInicio;
 	private Date dataFim;
+	private ProdutoService service;
 	
 	@PostConstruct
 	public void init(){
 		obj = new Produto();
 		dao = new ProdutoDAO();
+		service = new ProdutoService((ProdutoDAO) dao);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void handleFileUpload(FileUploadEvent event) throws IOException {
 		UploadedFile file = event.getFile();
 		byte[] fileContent = file.getContents();
@@ -50,8 +54,7 @@ public class ProdutoMBean extends AbstractController{
     }
 	
 	public void getTopProdutos(){
-		ProdutoDAO produtoDAO = new ProdutoDAO();
-		this.produtoTopDez = produtoDAO.listTopProdutos(dataInicio, dataFim);
+		this.produtoTopDez = service.listTopProdutos(dataInicio, dataFim);
 	}
 
 	public List<Produto> getProdutoTopDez() {

@@ -21,6 +21,7 @@ public class VendaDAO extends GenericDAO<Venda>{
         consulta.setParameter("dataInicio", dataInicio);
 		consulta.setParameter("dataFim", dataFim);
 		
+		@SuppressWarnings("unchecked")
 		List<Venda> vendas = consulta.getResultList();
 		
 		return vendas;

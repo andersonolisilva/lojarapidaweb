@@ -49,7 +49,6 @@ public class Cliente implements PersistDB{
 	
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
 		return this.id;
 	}
 

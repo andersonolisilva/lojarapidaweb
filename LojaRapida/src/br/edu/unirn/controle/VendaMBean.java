@@ -5,28 +5,30 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.edu.unirn.dao.VendaDAO;
 import br.edu.unirn.dominio.Venda;
+import br.edu.unirn.service.VendaService;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class VendaMBean extends AbstractController{
 
 	private List<Venda> vendas;
 	private Date dataInicio;
 	private Date dataFim;
+	private VendaService service;
 
 	@PostConstruct
 	public void init(){
 		obj = new Venda();
 		dao = new VendaDAO();
+		service = new VendaService((VendaDAO)dao);
 	}
 
 	public void getVendaPorPeriodo(){
-		VendaDAO vendaDAO = new VendaDAO();
-		this.vendas = vendaDAO.vendaPorPeriodo(dataInicio, dataFim);
+		this.vendas = service.vendaPorPeriodo(dataInicio, dataFim);
 	}
 
 	public List<Venda> getVendas() {
